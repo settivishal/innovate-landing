@@ -20,6 +20,7 @@
   :root {
     --bg: #0e0f11; --bg-2: #131518; --panel: #17191d; --line: #272a30;
     --text: #f3f4f6; --muted: #9ba1aa; --dim: #6b717a;
+    --a-surface: #17191c; --a-surface-2: #22252a; --a-line: #2e3238; --a-line-strong: #3d424a; --a-accent: #ff7a1a; --a-accent-soft: #3a2415; --a-on-accent: #1a0f07; --a-muted: #a19d95; --a-medium: #f5b700; --a-critical: #ff5c5c;
     --hi: #e4ff3a; --warn: #ff6a3d; --ok: #3ddc97;
     --display: "Inter Tight", Inter, system-ui, sans-serif;
     --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
@@ -107,13 +108,13 @@
 
   /* Hardware */
   .devices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-  .device { background: var(--bg); }
+  .device { background: var(--bg); display: flex; flex-direction: column; }
   .device .shot { aspect-ratio: 4 / 5; }
   .device .shot > img { transition: transform 0.6s; filter: saturate(0.85); }
   .device:hover .shot > img { transform: scale(1.04); }
-  .device .body { padding: 26px 24px 30px; }
+  .device .body { padding: 26px 24px 30px; flex: 1; display: flex; flex-direction: column; }
   .device h3 { margin-bottom: 10px; }
-  .device ul { list-style: none; padding: 0; margin: 18px 0 0; font: 500 12px/1 var(--mono); color: var(--muted); }
+  .device ul { list-style: none; padding: 0; margin: auto 0 0; padding-top: 18px; font: 500 12px/1 var(--mono); color: var(--muted); }
   .device li { padding: 10px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
   .device li span { color: var(--text); }
   .is-live { color: var(--ok) !important; border-color: rgba(61,220,151,0.45); }
@@ -136,10 +137,37 @@
   .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
   .feature { background: var(--bg); padding: 36px 32px 40px; min-height: 250px; transition: background 0.25s; }
   .feature:hover { background: var(--bg-2); }
-  .feature .k { font: 600 12px/1 var(--mono); color: var(--dim); letter-spacing: 0.1em; margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .feature .k { font: 600 12px/1 var(--mono); color: var(--dim); letter-spacing: 0.1em; margin-bottom: 22px; display: flex; justify-content: space-between; }
   .feature .k span { color: var(--hi); }
   .feature h3 { margin-bottom: 12px; }
   .feature p { font-size: 15px; }
+  .vig { height: 124px; margin-bottom: 26px; padding: 14px; border: 1px solid var(--a-line); border-radius: 14px; background: var(--a-surface); font-size: 13px; color: var(--text); display: flex; flex-direction: column; justify-content: center; gap: 10px; overflow: hidden; position: relative; }
+  .vig small { color: var(--a-muted); font-size: 12px; font-weight: 600; }
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--a-surface-2); }
+  .pill.high { background: var(--a-accent); color: var(--a-on-accent); }
+  .wave { display: flex; align-items: center; gap: 3px; height: 26px; }
+  .wave i { width: 3px; height: 100%; border-radius: 2px; background: var(--a-accent); animation: wave 1.2s ease-in-out infinite; transform-origin: center; }
+  .wave i:nth-child(3n) { animation-delay: -0.4s; } .wave i:nth-child(3n+1) { animation-delay: -0.8s; } .wave i:nth-child(4n) { animation-duration: 0.9s; }
+  @keyframes wave { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
+  .vig .bub { align-self: flex-start; padding: 7px 11px; border-radius: 12px; background: var(--a-accent-soft); line-height: 1.35; }
+  .vig.photo { padding: 0; }
+  .vig.photo img { position: absolute; inset: 0; filter: saturate(0.8); }
+  .vig .hz { position: absolute; left: 34%; top: 30%; width: 34%; height: 62%; border: 2px solid var(--a-accent); border-radius: 4px; }
+  .vig .hz b { position: absolute; left: -2px; bottom: 100%; margin-bottom: 4px; white-space: nowrap; background: var(--a-accent); color: var(--a-on-accent); font-size: 11px; padding: 3px 7px; border-radius: 6px; }
+  .nrow { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: center; }
+  .nrow img { height: 70px; border-radius: 10px; }
+  .nrow strong, .ncard strong { display: block; font-weight: 600; margin: 5px 0 2px; }
+  .vmeta { display: flex; align-items: center; gap: 8px; color: var(--a-muted); font-size: 12px; }
+  .counts { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .counts b { display: block; font: 700 26px/1 var(--display); }
+  .counts b.o { color: var(--a-accent); }
+  .counts div { color: var(--a-muted); font-size: 12px; }
+  .vpills { display: flex; gap: 6px; }
+  .vpills span { padding: 4px 10px; border: 1px solid var(--a-line-strong); border-radius: 8px; font-size: 12px; font-weight: 600; }
+  .vbtn { align-self: flex-start; padding: 7px 12px; border-radius: 10px; background: var(--a-accent); color: var(--a-on-accent); font-weight: 700; font-size: 12px; }
+  .gantt { position: relative; height: 54px; background: repeating-linear-gradient(90deg, transparent 0 calc(20% - 1px), var(--a-line) calc(20% - 1px) 20%); }
+  .gantt i { position: absolute; height: 12px; border-radius: 6px; background: var(--a-line-strong); }
+  .gantt i:nth-child(1) { top: 2px; } .gantt i:nth-child(2) { top: 21px; background: var(--a-accent); } .gantt i:nth-child(3) { top: 40px; }
 
   /* Demo */
   .demo { background: var(--bg-2); border-block: 1px solid var(--line); }
@@ -150,14 +178,22 @@
   .checks li { padding: 18px 0 18px 34px; border-top: 1px solid var(--line); position: relative; color: var(--muted); }
   .checks li::before { content: ""; position: absolute; left: 0; top: 24px; width: 12px; height: 12px; border: 2px solid var(--hi); }
   .checks strong { color: var(--text); font-weight: 600; }
-  .chat { display: grid; gap: 12px; }
-  .msg { max-width: 84%; padding: 14px 18px; font-size: 15px; background: var(--panel); border: 1px solid var(--line); color: var(--text); }
-  .msg span { display: block; font: 600 11px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
-  .msg.kira span { color: var(--hi); }
-  .msg.me { justify-self: end; background: #1d2026; }
-  .msg.note { max-width: 100%; border-left: 3px solid var(--warn); display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: center; }
-  .msg.note .shot { aspect-ratio: 1; }
-  .msg.note strong { display: block; font: 600 11px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+  .app-chat { border: 1px solid var(--a-line); border-radius: 14px; background: #0d0e10; overflow: hidden; }
+  .app-tabs { display: flex; gap: 24px; padding: 0 20px; border-bottom: 1px solid var(--a-line); font-size: 14px; font-weight: 600; color: var(--a-muted); }
+  .app-tabs span { padding: 14px 0 12px; border-bottom: 2px solid transparent; }
+  .app-tabs span.on { color: var(--text); border-color: var(--a-accent); }
+  .app-tabs em { font-style: normal; font-size: 11px; padding: 1px 7px; margin-left: 4px; border-radius: 999px; background: var(--a-surface-2); }
+  .app-log { display: grid; gap: 10px; padding: 18px; }
+  .cb { justify-self: start; max-width: 80%; padding: 10px 14px; border-radius: 14px; background: var(--a-surface-2); font-size: 15px; line-height: 1.45; color: var(--text); }
+  .cb small { display: block; font-size: 12px; font-weight: 600; color: var(--a-muted); margin-bottom: 2px; }
+  .cb.me { justify-self: end; background: var(--a-accent-soft); }
+  .pchips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; }
+  .pchips span { padding: 8px 4px; text-align: center; border: 2px solid var(--a-line-strong); border-radius: 10px; background: var(--a-surface); font-size: 13px; font-weight: 700; }
+  .pchips .m { border-color: var(--a-medium); } .pchips .h { border-color: var(--a-accent); } .pchips .c { border-color: var(--a-critical); }
+  .pchips .on { background: var(--a-accent); color: var(--a-on-accent); }
+  .ncard { display: grid; grid-template-columns: 112px 1fr; gap: 14px; padding: 10px; border: 1px solid var(--a-line); border-radius: 14px; background: var(--a-surface); font-size: 14px; }
+  .ncard img { aspect-ratio: 4 / 3; height: auto; border-radius: 10px; align-self: start; }
+  .ncard p { color: var(--text); margin: 0; font-size: 13px; }
 
   /* Beyond */
   .tiles { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; height: 760px; }
@@ -256,7 +292,10 @@
     .caption { left: 12px; right: 12px; bottom: 12px; }
     .viewer .hud { left: 12px !important; right: auto !important; top: 12px !important; }
     .viewer .hud + .hud { top: 48px !important; }
-    .msg.note { grid-template-columns: 1fr; }
+    .cb { max-width: 90%; }
+    .pchips { grid-template-columns: repeat(2, 1fr); }
+    .ncard { grid-template-columns: 88px 1fr; }
+    .vig .bub { font-size: 12px; }
   }
 </style>
 </head>
@@ -390,12 +429,12 @@
       <p class="lead">Everything an inspection needs, from the first "Hey Kira" to the follow-up email.</p>
     </div>
     <div class="features reveal">
-      <div class="feature"><div class="k">01<span>Voice</span></div><h3>Voice-first notes</h3><p>Speak naturally. Kira structures it into category, priority and action item.</p></div>
-      <div class="feature"><div class="k">02<span>Vision</span></div><h3>Live hazard detection</h3><p>PPE, ladders, flammable storage and blocked exits, boxed on screen as you walk.</p></div>
-      <div class="feature"><div class="k">03<span>Evidence</span></div><h3>Photo on every note</h3><p>Each note keeps the frame it was recorded on, time-stamped and tied to the walk.</p></div>
-      <div class="feature"><div class="k">04<span>Reports</span></div><h3>Daily briefs</h3><p>Summaries, issue logs and action lists for managers and supervisors, as PDF or CSV.</p></div>
-      <div class="feature"><div class="k">05<span>Follow-up</span></div><h3>Approval-first email</h3><p>Kira drafts the message to the right trade. Nothing is sent until you approve it.</p></div>
-      <div class="feature"><div class="k">06<span>Plans</span></div><h3>Schedules and drawings</h3><p>Kira reads your schedule and drawings, answers questions on site and drafts schedule updates.</p></div>
+      <div class="feature"><div class="k">01<span>Voice</span></div><div class="vig"><div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="bub">Hey Kira, log this: missing toe board on level 2.</div></div><h3>Voice-first notes</h3><p>Speak naturally. Kira structures it into category, priority and action item.</p></div>
+      <div class="feature"><div class="k">02<span>Vision</span></div><div class="vig photo"><img src="img/ladder.jpg" alt=""><div class="hz"><b>Ladder · damaged rungs</b></div></div><h3>Live hazard detection</h3><p>PPE, ladders, flammable storage and blocked exits, boxed on screen as you walk.</p></div>
+      <div class="feature"><div class="k">03<span>Evidence</span></div><div class="vig"><div class="nrow"><img src="img/stairs.jpg" alt=""><div><div class="vmeta"><span class="pill high">High</span>10:01 AM</div><strong>Missing toe board</strong><small>Level 2 · east stair</small></div></div></div><h3>Photo on every note</h3><p>Each note keeps the frame it was recorded on, time-stamped and tied to the walk.</p></div>
+      <div class="feature"><div class="k">04<span>Reports</span></div><div class="vig"><div class="counts"><div><b>12</b>notes</div><div><b class="o">3</b>high</div><div><b>7</b>actions</div></div><div class="vpills"><span>PDF</span><span>CSV</span><span>Issue log</span></div></div><h3>Daily briefs</h3><p>Summaries, issue logs and action lists for managers and supervisors, as PDF or CSV.</p></div>
+      <div class="feature"><div class="k">05<span>Follow-up</span></div><div class="vig"><div><small>Draft · To: Site super</small><strong style="display:block;font-weight:600;margin-top:4px">Damaged ladder, east wall L2</strong></div><span class="vbtn">Approve &amp; send</span></div><h3>Approval-first email</h3><p>Kira drafts the message to the right trade. Nothing is sent until you approve it.</p></div>
+      <div class="feature"><div class="k">06<span>Plans</span></div><div class="vig"><div class="gantt"><i style="left:2%;width:36%"></i><i style="left:30%;width:44%"></i><i style="left:64%;width:32%"></i></div><small>Week 42 · Level 2 framing</small></div><h3>Schedules and drawings</h3><p>Kira reads your schedule and drawings, answers questions on site and drafts schedule updates.</p></div>
     </div>
   </div>
 </section>
@@ -426,13 +465,17 @@
         <li><strong>Stays on task.</strong> Kira only helps with the inspection in front of you.</li>
       </ul>
     </div>
-    <div class="chat reveal">
-      <div class="msg kira"><span>Kira</span>Heads up: there's a step ladder with damaged rungs by the east wall. Want me to note it?</div>
-      <div class="msg me"><span>Inspector</span>Yes, add it.</div>
-      <div class="msg kira"><span>Kira</span>Got it. What priority?</div>
-      <div class="msg me"><span>Inspector</span>High.</div>
-      <div class="msg note"><div class="shot"><img src="img/ladder.jpg" alt=""></div><div><strong>Note 4 · Equipment · High</strong>Damaged step ladder at the east wall, level 2. Action: tag out and replace before next shift.</div></div>
-      <div class="msg kira"><span>Kira</span>Saved with the photo. I've drafted a message to the site super. Send it?</div>
+    <div class="app-chat reveal">
+      <div class="app-tabs"><span>Notes <em>4</em></span><span class="on">Conversation <em>9</em></span><span>Report</span></div>
+      <div class="app-log">
+        <div class="cb"><small>Kira · 10:42 AM</small>Heads up: there's a step ladder with damaged rungs by the east wall. Want me to note it?</div>
+        <div class="cb me"><small>Field Inspector · 10:42 AM</small>Yes, add it.</div>
+        <div class="cb"><small>Kira · 10:42 AM</small>Got it. What priority should I assign?
+          <div class="pchips"><span>Low</span><span class="m">Medium</span><span class="h on">High</span><span class="c">Critical</span></div></div>
+        <div class="cb me"><small>Field Inspector · 10:43 AM</small>High</div>
+        <div class="ncard"><img src="img/ladder.jpg" alt="Damaged step ladder"><div><div class="vmeta"><span class="pill high">High</span>Equipment · 10:43 AM</div><strong>Damaged step ladder at the east wall, level 2.</strong><p><b>Next step:</b> Tag out and replace before next shift.</p></div></div>
+        <div class="cb"><small>Kira · 10:43 AM</small>Saved with the photo. I've drafted a message to the site super. Send it?</div>
+      </div>
     </div>
   </div>
 </section>
@@ -463,10 +506,10 @@
     </div>
     <div class="team reveal">
       <div class="person"><div class="ini">SL</div><h3>Dr. Shuai Li</h3><p>Faculty lead</p></div>
-      <div class="person"><div class="ini">SW</div><h3>Songzi Wu</h3><p>Role</p></div>
-      <div class="person"><div class="ini">VS</div><h3>Vishal Setti</h3><p>Role</p></div>
-      <div class="person"><div class="ini">GS</div><h3>Gavin Sawall</h3><p>Role</p></div>
-      <div class="person"><div class="ini">MW</div><h3>Mengjun Wang</h3><p>Role</p></div>
+      <div class="person"><div class="ini">SW</div><h3>Songzi Wu</h3><p>Project lead</p></div>
+      <div class="person"><div class="ini">VS</div><h3>Vishal Setti</h3><p>AI &amp; software</p></div>
+      <div class="person"><div class="ini">GS</div><h3>Gavin Sawall</h3><p>Learning module</p></div>
+      <div class="person"><div class="ini">MW</div><h3>Mengjun Wang</h3><p>Learning module</p></div>
     </div>
   </div>
 </section>
