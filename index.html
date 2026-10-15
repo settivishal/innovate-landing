@@ -3,118 +3,255 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brand · The AI site inspector that walks with you</title>
+<title>Walkscribe · The AI site inspector that walks with you</title>
 <meta name="description" content="Walk the site and talk. Kira spots hazards, records notes with photos, and writes the report.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://settivishal.github.io/innovate-landing/">
+<meta property="og:title" content="Walkscribe · The AI site inspector that walks with you">
+<meta property="og:description" content="Walk the site and talk. Kira spots hazards, records notes with photos, and writes the report.">
+<meta property="og:image" content="https://settivishal.github.io/innovate-landing/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b0d10; --panel: #13171c; --line: #232a32; --text: #e9edf1; --muted: #8d97a3;
-    --accent: #ff8a1f; --accent-2: #ffc23d; --ok: #3ccf8e; --radius: 16px;
+    --bg: #0e0f11; --bg-2: #131518; --panel: #17191d; --line: #272a30;
+    --text: #f3f4f6; --muted: #9ba1aa; --dim: #6b717a;
+    --hi: #e4ff3a; --warn: #ff6a3d; --ok: #3ddc97;
+    --display: "Inter Tight", Inter, system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: inherit; text-decoration: none; }
-  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-  section { padding: 96px 0; border-top: 1px solid var(--line); }
-  h1, h2, h3 { line-height: 1.15; margin: 0 0 16px; letter-spacing: -0.02em; }
-  h1 { font-size: clamp(40px, 6vw, 68px); }
-  h2 { font-size: clamp(30px, 4vw, 44px); }
-  h3 { font-size: 19px; }
-  p { margin: 0 0 16px; color: var(--muted); }
-  .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
-  .lead { font-size: 19px; max-width: 620px; }
-  .button { display: inline-block; padding: 13px 22px; border-radius: 999px; font-weight: 600; border: 1px solid var(--line); }
-  .button.primary { background: var(--accent); color: #111; border-color: var(--accent); }
-  .button + .button { margin-left: 10px; }
-  .grid { display: grid; gap: 20px; }
-  .g2 { grid-template-columns: repeat(2, 1fr); }
-  .g3 { grid-template-columns: repeat(3, 1fr); }
-  .g4 { grid-template-columns: repeat(4, 1fr); }
-  .g5 { grid-template-columns: repeat(5, 1fr); }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
-  .card p { margin: 0; font-size: 15px; }
-  .icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,138,31,0.12); color: var(--accent); margin-bottom: 18px; }
-  .icon svg { width: 22px; height: 22px; }
-  .tag { display: inline-block; font-size: 12px; font-weight: 600; color: var(--accent-2); border: 1px solid rgba(255,194,61,0.35); border-radius: 999px; padding: 2px 10px; margin-bottom: 14px; }
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+  section { padding: 120px 0; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.04; margin: 0; letter-spacing: -0.03em; font-weight: 700; }
+  h1 { font-size: clamp(46px, 7.4vw, 104px); }
+  h2 { font-size: clamp(36px, 5vw, 64px); }
+  h3 { font-size: 24px; letter-spacing: -0.02em; font-weight: 600; }
+  p { margin: 0; color: var(--muted); }
+  .lead { font-size: 19px; max-width: 560px; }
+  .tag { display: inline-block; font: 600 12px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--hi); border: 1px solid rgba(228,255,58,0.45); padding: 7px 10px; }
+  .head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 56px; }
+  .head .tag { margin-bottom: 22px; }
+  .button { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; font-weight: 600; border: 1px solid var(--line); transition: background 0.2s, color 0.2s; }
+  .button.primary { background: var(--hi); color: #0e0f11; border-color: var(--hi); }
+  .button.primary:hover { background: #f0ff7a; }
+  .button:not(.primary):hover { background: var(--panel); }
 
-  nav { position: sticky; top: 0; z-index: 10; background: rgba(11,13,16,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .logo { font-weight: 800; font-size: 20px; display: flex; align-items: center; gap: 10px; }
-  .logo i { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: inline-block; }
-  .links a { color: var(--muted); margin-left: 28px; font-size: 15px; }
-  .links a:hover { color: var(--text); }
-
-  .hero { padding: 88px 0 96px; border-top: 0; }
-  .hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
-  .hero h1 span { color: var(--accent); }
-  .phone { width: 300px; margin: 0 auto; aspect-ratio: 9 / 19; border-radius: 44px; border: 10px solid #1d232a; background: #000; position: relative; overflow: hidden; box-shadow: 0 40px 120px rgba(255,138,31,0.15); }
-  .scene { position: absolute; inset: 0; background:
-      linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.75)),
-      repeating-linear-gradient(90deg, #2b2f33 0 38px, #30353a 38px 40px),
-      linear-gradient(180deg, #4a5560 0 46%, #6c5a45 46%); }
-  .scene::before { content: ""; position: absolute; left: 0; right: 0; top: 46%; height: 2px; background: #8a7357; }
-  .box { position: absolute; border: 2px solid var(--accent); border-radius: 6px; }
-  .box b { position: absolute; top: -24px; left: -2px; background: var(--accent); color: #111; font-size: 11px; padding: 2px 7px; border-radius: 5px 5px 5px 0; white-space: nowrap; }
+  /* Overlays drawn on photos, styled like the app */
+  .shot { position: relative; overflow: hidden; background: #000; }
+  .box { position: absolute; border: 2px solid var(--hi); box-shadow: 0 0 0 1px rgba(0,0,0,0.35); }
+  .box b { position: absolute; left: -2px; bottom: 100%; margin-bottom: 4px; background: var(--hi); color: #0e0f11; font: 600 11px/1 var(--mono); padding: 5px 7px; white-space: nowrap; letter-spacing: 0.02em; }
+  .box.warn { border-color: var(--warn); }
+  .box.warn b { background: var(--warn); color: #fff; }
   .box.ok { border-color: var(--ok); }
   .box.ok b { background: var(--ok); }
-  .box.b1 { left: 18%; top: 32%; width: 22%; height: 40%; }
-  .box.b2 { left: 56%; top: 55%; width: 30%; height: 18%; }
-  .listen { position: absolute; left: 14px; right: 14px; bottom: 16px; background: rgba(19,23,28,0.92); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; font-size: 13px; }
-  .listen small { color: var(--accent); font-weight: 700; display: block; margin-bottom: 2px; }
-  .listen p { color: var(--text); margin: 0; }
+  .hud { position: absolute; font: 600 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: rgba(14,15,17,0.72); backdrop-filter: blur(8px); padding: 9px 11px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warn); animation: blink 1.4s infinite; }
+  .dot.hi { background: var(--hi); }
+  @keyframes blink { 50% { opacity: 0.25; } }
+  .card { position: absolute; background: rgba(23,25,29,0.94); backdrop-filter: blur(10px); border: 1px solid var(--line); padding: 16px 18px; font-size: 14px; }
+  .card small { display: block; font: 600 11px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--hi); margin-bottom: 8px; }
+  .card p { color: var(--text); }
+  .chips { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .chips span { font: 600 12px/1 var(--mono); padding: 8px 10px; border: 1px solid var(--line); color: var(--muted); }
+  .chips span.on { background: var(--warn); border-color: var(--warn); color: #fff; }
 
-  .device { text-align: left; }
-  .device .art { height: 150px; border-radius: 12px; background: radial-gradient(circle at 50% 60%, #1e252d, #12161b); margin-bottom: 22px; display: grid; place-items: center; color: var(--accent); }
-  .device .art svg { width: 92px; height: 92px; }
-  .device ul { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+  /* Nav */
+  nav { position: fixed; inset: 0 0 auto; z-index: 20; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+  nav.solid { background: rgba(14,15,17,0.86); backdrop-filter: blur(12px); border-color: var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { font: 800 21px/1 var(--display); letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; }
+  .logo i { width: 22px; height: 22px; border: 2px solid var(--hi); position: relative; }
+  .logo i::after { content: ""; position: absolute; inset: 4px; background: var(--hi); }
+  .links { display: flex; align-items: center; gap: 30px; font-size: 15px; color: var(--muted); }
+  .links a:not(.button):hover { color: var(--text); }
+  .links .button { padding: 11px 18px; }
 
-  .steps { counter-reset: step; }
-  .step { position: relative; padding-top: 44px; }
-  .step::before { counter-increment: step; content: counter(step, decimal-leading-zero); position: absolute; top: 0; left: 28px; color: var(--accent); font-weight: 800; font-size: 14px; letter-spacing: 0.1em; }
+  /* Hero */
+  .hero { padding: 150px 0 0; }
+  .hero-top { display: grid; grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: end; margin-bottom: 56px; }
+  .hero h1 em { font-style: normal; color: var(--hi); }
+  .hero .tag { margin-bottom: 28px; }
+  .hero .lead { margin-bottom: 30px; }
+  .hero .button + .button { margin-left: 8px; }
+  .viewer { aspect-ratio: 2000 / 1243; }
+  .viewer .box { opacity: 0; transform: scale(1.08); transition: opacity 0.45s, transform 0.45s; }
+  .viewer.live .box { opacity: 1; transform: none; }
+  .viewer.live .box:nth-of-type(2) { transition-delay: 0.5s; }
+  .viewer.live .box:nth-of-type(3) { transition-delay: 1s; }
+  .viewer .flag { right: 24px; top: 74px; width: 290px; opacity: 0; transform: translateX(24px); transition: 0.5s 3.2s; }
+  .viewer.live .flag { opacity: 1; transform: none; }
+  .caption { left: 24px; right: 24px; bottom: 24px; max-width: 560px; }
+  .caption p::after { content: "▍"; color: var(--hi); animation: blink 1s infinite; }
+  .scan { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--hi), transparent); opacity: 0.5; animation: scan 5s linear infinite; }
+  @keyframes scan { from { top: 0; } to { top: 100%; } }
 
-  .chat { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: grid; gap: 14px; }
-  .msg { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 15px; }
-  .msg span { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
-  .msg.me { justify-self: end; background: #1e2a37; }
-  .msg.kira { background: #1c1712; border: 1px solid rgba(255,138,31,0.25); }
-  .msg.note { background: #12191a; border: 1px solid rgba(60,207,142,0.3); max-width: 100%; }
-  .msg.note strong { color: var(--ok); }
+  /* Stats */
+  .stats { padding: 0; border-bottom: 1px solid var(--line); }
+  .stats .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .stat { padding: 48px 32px 48px 0; border-right: 1px solid var(--line); }
+  .stat + .stat { padding-left: 32px; }
+  .stat:last-child { border-right: 0; }
+  .stat strong { display: block; font: 700 64px/1 var(--display); letter-spacing: -0.04em; margin-bottom: 14px; }
+  .stat cite { display: block; margin-top: 10px; font: 500 11px/1.4 var(--mono); color: var(--dim); font-style: normal; text-transform: uppercase; letter-spacing: 0.06em; }
 
-  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-  .checks { list-style: none; padding: 0; margin: 24px 0 0; }
-  .checks li { padding-left: 30px; position: relative; margin-bottom: 14px; color: var(--muted); }
-  .checks li strong { color: var(--text); }
-  .checks li::before { content: ""; position: absolute; left: 0; top: 7px; width: 14px; height: 14px; border-radius: 4px; background: var(--accent); }
+  /* Hardware */
+  .devices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .device { background: var(--bg); }
+  .device .shot { aspect-ratio: 4 / 5; }
+  .device .shot > img { transition: transform 0.6s; filter: saturate(0.85); }
+  .device:hover .shot > img { transform: scale(1.04); }
+  .device .body { padding: 26px 24px 30px; }
+  .device h3 { margin-bottom: 10px; }
+  .device ul { list-style: none; padding: 0; margin: 18px 0 0; font: 500 12px/1 var(--mono); color: var(--muted); }
+  .device li { padding: 10px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
+  .device li span { color: var(--text); }
+  .phone-ui { position: absolute; left: 50%; bottom: -30px; width: 46%; aspect-ratio: 9 / 18; transform: translateX(-50%); border: 6px solid #0e0f11; border-radius: 26px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+  .phone-ui img { object-position: 60% 30%; }
+  .phone-ui .box { left: 18%; top: 54%; width: 64%; height: 18%; }
+  .laser-lines { position: absolute; inset: 0; pointer-events: none; }
+  .laser-lines i { position: absolute; background: #5dff3a; box-shadow: 0 0 10px #5dff3a; opacity: 0.85; }
 
-  .team .card { text-align: center; }
-  .avatar { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px; background: linear-gradient(135deg, #2a323b, #1a1f25); display: grid; place-items: center; font-weight: 700; color: var(--accent); }
+  /* Steps */
+  .step { display: grid; grid-template-columns: 1.15fr 1fr; gap: 72px; align-items: center; padding: 48px 0; border-top: 1px solid var(--line); }
+  .step:nth-child(even) .shot { order: 2; }
+  .step .shot { aspect-ratio: 3 / 2; }
+  .step .num { font: 600 13px/1 var(--mono); color: var(--hi); letter-spacing: 0.12em; margin-bottom: 18px; display: block; }
+  .step h3 { font-size: clamp(30px, 3.4vw, 44px); letter-spacing: -0.03em; margin-bottom: 18px; }
+  .step p { font-size: 17px; max-width: 460px; }
 
-  .cta { text-align: center; }
-  .cta .lead { margin: 0 auto 32px; }
-  footer { border-top: 1px solid var(--line); padding: 32px 0; color: var(--muted); font-size: 14px; }
-  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  /* Platform */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .feature { background: var(--bg); padding: 36px 32px 40px; min-height: 250px; transition: background 0.25s; }
+  .feature:hover { background: var(--bg-2); }
+  .feature .k { font: 600 12px/1 var(--mono); color: var(--dim); letter-spacing: 0.1em; margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .feature .k span { color: var(--hi); }
+  .feature h3 { margin-bottom: 12px; }
+  .feature p { font-size: 15px; }
 
-  @media (max-width: 900px) {
-    .hero .wrap, .split { grid-template-columns: 1fr; }
-    .g3, .g4, .g5 { grid-template-columns: repeat(2, 1fr); }
-    .links { display: none; }
+  /* Demo */
+  .demo { background: var(--bg-2); border-block: 1px solid var(--line); }
+  .demo .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .demo .tag { margin-bottom: 22px; }
+  .demo h2 { margin-bottom: 22px; }
+  .checks { list-style: none; padding: 0; margin: 36px 0 0; }
+  .checks li { padding: 18px 0 18px 34px; border-top: 1px solid var(--line); position: relative; color: var(--muted); }
+  .checks li::before { content: ""; position: absolute; left: 0; top: 24px; width: 12px; height: 12px; border: 2px solid var(--hi); }
+  .checks strong { color: var(--text); font-weight: 600; }
+  .chat { display: grid; gap: 12px; }
+  .msg { max-width: 84%; padding: 14px 18px; font-size: 15px; background: var(--panel); border: 1px solid var(--line); color: var(--text); }
+  .msg span { display: block; font: 600 11px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+  .msg.kira span { color: var(--hi); }
+  .msg.me { justify-self: end; background: #1d2026; }
+  .msg.note { max-width: 100%; border-left: 3px solid var(--warn); display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: center; }
+  .msg.note .shot { aspect-ratio: 1; }
+  .msg.note strong { display: block; font: 600 11px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--warn); margin-bottom: 8px; }
+
+  /* Beyond */
+  .tiles { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; height: 760px; }
+  .tile { position: relative; overflow: hidden; }
+  .tile:first-child { grid-row: span 2; }
+  .tile img { transition: transform 0.8s; }
+  .tile:hover img { transform: scale(1.04); }
+  .tile .over { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; background: linear-gradient(180deg, rgba(14,15,17,0) 35%, rgba(14,15,17,0.92)); }
+  .tile .tag { align-self: flex-start; margin-bottom: 16px; background: rgba(14,15,17,0.6); }
+  .tile h3 { font-size: 30px; margin-bottom: 10px; }
+  .tile p { color: #c9cdd3; max-width: 520px; }
+
+  /* Team */
+  .team { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .person { background: var(--bg); padding: 30px 24px; }
+  .person .ini { width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid var(--line); font: 600 15px/1 var(--mono); color: var(--hi); margin-bottom: 24px; }
+  .person h3 { font-size: 19px; margin-bottom: 6px; }
+  .person p { font: 500 12px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--dim); }
+
+  /* App screens */
+  .screens { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .screens figure { margin: 0; }
+  .screens figure:first-child { grid-column: 1 / -1; }
+  .frame { border: 1px solid var(--line); background: var(--panel); }
+  .frame::before { content: ""; display: block; height: 30px; border-bottom: 1px solid var(--line); background: radial-gradient(circle at 16px 50%, #3a3d44 4px, transparent 5px), radial-gradient(circle at 34px 50%, #3a3d44 4px, transparent 5px), radial-gradient(circle at 52px 50%, #3a3d44 4px, transparent 5px); }
+  .frame img { display: block; width: 100%; height: auto; }
+  .screens figcaption { margin-top: 14px; font: 500 12px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--dim); }
+
+  /* CTA */
+  .cta { position: relative; padding: 180px 0; text-align: center; overflow: hidden; isolation: isolate; }
+  .cta > img { position: absolute; inset: 0; z-index: -2; }
+  .cta::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--bg) 0%, rgba(14,15,17,0.55) 40%, rgba(14,15,17,0.85) 100%); }
+  .cta .tag { margin-bottom: 26px; background: rgba(14,15,17,0.5); }
+  .cta h2 { font-size: clamp(42px, 6.4vw, 88px); margin-bottom: 24px; }
+  .cta .lead { margin: 0 auto 36px; color: #c9cdd3; }
+  .demo-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 640px; margin: 0 auto; text-align: left; }
+  .demo-form input, .demo-form textarea { font: inherit; color: var(--text); background: rgba(14,15,17,0.6); border: 1px solid var(--line); padding: 14px 16px; outline: none; resize: vertical; }
+  .demo-form input:focus, .demo-form textarea:focus { border-color: var(--hi); }
+  .demo-form textarea, .demo-form button { grid-column: 1 / -1; }
+  .demo-form button { justify-content: center; cursor: pointer; font: inherit; font-weight: 600; }
+  footer { border-top: 1px solid var(--line); padding: 64px 0 34px; }
+  .foot { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 48px; }
+  .foot p { color: var(--muted); max-width: 34ch; margin: 18px 0 0; }
+  .foot h4 { font: 600 12px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin: 0 0 18px; }
+  .foot ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .foot a:hover { color: var(--hi); }
+  .legal { border-top: 1px solid var(--line); padding-top: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font: 500 12px/1.4 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal, .viewer .box, .viewer .flag { opacity: 1; transform: none; }
   }
-  @media (max-width: 600px) {
-    .g2, .g3, .g4, .g5 { grid-template-columns: 1fr; }
-    section { padding: 72px 0; }
-    .button + .button { margin: 10px 0 0; }
+
+  @media (max-width: 980px) {
+    .hero-top, .head, .step, .demo .wrap { grid-template-columns: 1fr; gap: 28px; }
+    .step:nth-child(even) .shot { order: 0; }
+    .devices { grid-template-columns: repeat(2, 1fr); }
+    .features { grid-template-columns: repeat(2, 1fr); }
+    .screens { grid-template-columns: 1fr; }
+    .foot { grid-template-columns: 1fr 1fr; }
+    .foot > div:first-child { grid-column: 1 / -1; }
+    .team { grid-template-columns: repeat(3, 1fr); }
+    .tiles { grid-template-columns: 1fr; grid-template-rows: none; height: auto; }
+    .tile { aspect-ratio: 4 / 3; }
+    .tile:first-child { grid-row: auto; }
+    .links a:not(.button) { display: none; }
+    .viewer .flag { display: none; }
+  }
+  @media (max-width: 640px) {
+    section { padding: 84px 0; }
+    .wrap { padding: 0 20px; }
+    .demo-form { grid-template-columns: 1fr; }
+    .hero { padding-top: 120px; }
+    .stats .wrap, .devices, .features, .team { grid-template-columns: 1fr; }
+    .stat, .stat + .stat { padding: 32px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+    .stat:last-child { border-bottom: 0; }
+    .viewer { aspect-ratio: 4 / 5; }
+    .viewer img { object-position: 62% center; }
+    .viewer .box { display: none; }
+    .hero .button + .button { margin: 10px 0 0; }
+    .caption { left: 12px; right: 12px; bottom: 12px; }
+    .msg.note { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<nav>
+<nav id="nav">
   <div class="wrap">
-    <a class="logo" href="#"><i></i><span data-brand>Brand</span></a>
+    <a class="logo" href="#"><i></i>Walkscribe</a>
     <div class="links">
       <a href="#hardware">Hardware</a>
+      <a href="#how">How it works</a>
       <a href="#platform">Platform</a>
-      <a href="#demo">Demo</a>
+      <a href="#app">App</a>
       <a href="#team">Team</a>
       <a class="button primary" href="#contact">Book a demo</a>
     </div>
@@ -123,154 +260,276 @@
 
 <header class="hero">
   <div class="wrap">
-    <div>
-      <div class="eyebrow">AI construction inspection</div>
-      <h1>Walk the site.<br><span>Kira</span> writes the report.</h1>
-      <p class="lead">Kira is a hands-free inspection assistant. She sees what your camera sees, listens when you say "Hey Kira", flags hazards, and turns your walkthrough into notes, photos and action items.</p>
-      <a class="button primary" href="#contact">Book a demo</a>
-      <a class="button" href="#demo">See it in action</a>
+    <div class="hero-top">
+      <div>
+        <span class="tag">Kira · AI site inspector</span>
+        <h1>Walk the site.<br><em>Kira</em> writes the report.</h1>
+      </div>
+      <div>
+        <p class="lead">A hands-free inspection assistant that sees what your camera sees. Say "Hey Kira", and every hazard, note and photo lands in the report before you reach the next floor.</p>
+        <a class="button primary" href="#contact">Book a demo →</a>
+        <a class="button" href="#how">How it works</a>
+      </div>
     </div>
-    <div class="phone" aria-hidden="true">
-      <div class="scene"></div>
-      <div class="box b1"><b>No hard hat · high</b></div>
-      <div class="box ok b2"><b>Ladder secured</b></div>
-      <div class="listen"><small>Kira · listening</small><p>"Hey Kira, log the flammable boxes by the generator."</p></div>
+    <div class="shot viewer" id="viewer">
+      <img src="img/hero.jpg" alt="Workers fixing rebar on a concrete deck">
+      <div class="scan"></div>
+      <div class="box ok" style="left:53.5%;top:15%;width:9%;height:13%"><b>Hard hat ✓</b></div>
+      <div class="box ok" style="left:67.8%;top:6.5%;width:9.4%;height:11%"><b>Hard hat ✓</b></div>
+      <div class="box warn" style="left:16%;top:62%;width:29%;height:23%"><b>Exposed rebar · trip hazard</b></div>
+      <div class="hud" style="left:24px;top:24px"><span class="dot"></span>Live · Cam 01 · Level 3 deck</div>
+      <div class="hud" style="right:24px;top:24px"><span class="dot hi"></span>Kira online</div>
+      <div class="card flag">
+        <small>Flag · High</small>
+        <p>Uncapped rebar ends near the walkway. Add as a note?</p>
+        <div class="chips"><span class="on">Add note</span><span>Dismiss</span></div>
+      </div>
+      <div class="card caption"><small>Inspector · Hey Kira</small><p id="typed"></p></div>
     </div>
   </div>
 </header>
 
+<section class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><strong>1 in 5</strong><p>US private-industry worker deaths happen in construction.</p><cite>OSHA</cite></div>
+    <div class="stat reveal"><strong>#1</strong><p>Fall protection is OSHA's most-cited standard, year after year.</p><cite>OSHA Top 10 violations</cite></div>
+    <div class="stat reveal"><strong>35%</strong><p>of a construction professional's time goes to searching for information, fixing mistakes and rework.</p><cite>FMI &amp; Autodesk, 2018</cite></div>
+  </div>
+</section>
+
 <section id="hardware">
   <div class="wrap">
-    <div class="eyebrow">Hardware</div>
-    <h2>Runs on the gear your crew already carries</h2>
-    <p class="lead">Start with a phone. Go hands-free with a hard-hat camera or smart glasses. Put instructions straight onto the work with a laser projector.</p>
-    <div class="grid g4" style="margin-top:40px">
-      <div class="card device">
-        <div class="art"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="18" y="6" width="28" height="52" rx="6"/><circle cx="32" cy="50" r="2.5"/><circle cx="38" cy="13" r="2.5"/></svg></div>
-        <h3>Kira Mobile</h3>
-        <p>The full inspection assistant in a phone browser. Nothing to install.</p>
-        <ul><li>Rear camera and mic</li><li>Works on iPhone and Android</li></ul>
+    <div class="head reveal">
+      <div><span class="tag">Hardware</span><h2>One assistant.<br>Any camera on site.</h2></div>
+      <p class="lead">Start with the phone in your pocket. Go hands-free with a hard-hat module or smart safety glasses. Then put the plan straight onto the wall with a laser projector.</p>
+    </div>
+    <div class="devices reveal">
+      <div class="device">
+        <div class="shot"><img src="img/phone.jpg" alt="Inspectors on a rebar deck"><div class="phone-ui"><img src="img/phone.jpg" alt=""><div class="box warn"><b>Rebar</b></div></div></div>
+        <div class="body"><h3>Kira Mobile</h3><p>The full assistant in a phone browser. Nothing to install.</p>
+          <ul><li>Platform<span>iOS · Android</span></li><li>Setup<span>&lt; 1 min</span></li></ul></div>
       </div>
-      <div class="card device">
-        <div class="art"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 40h48M12 40c0-14 9-24 20-24s20 10 20 24"/><path d="M32 16v24"/><rect x="26" y="42" width="12" height="8" rx="2"/><circle cx="32" cy="46" r="2"/></svg></div>
-        <h3>Hard-hat Module</h3>
-        <p>A clip-on RGB and depth camera with mic and WiFi. Fully hands-free.</p>
-        <ul><li>Depth sensing for blocked exits</li><li>All-shift battery</li></ul>
+      <div class="device">
+        <div class="shot"><img src="img/hardhat.jpg" alt="Worker in hard hat with headset"></div>
+        <div class="body"><h3>Hard-hat Module</h3><p>Clip-on RGB and depth camera with mic and WiFi. Fully hands-free.</p>
+          <ul><li>Sensors<span>RGB + depth</span></li><li>Battery<span>Full shift</span></li></ul></div>
       </div>
-      <div class="card device">
-        <div class="art"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="24" width="22" height="16" rx="6"/><rect x="36" y="24" width="22" height="16" rx="6"/><path d="M28 30h8M6 28l-2-4M58 28l2-4"/><circle cx="17" cy="22" r="2"/></svg></div>
-        <h3>Safety Glasses</h3>
-        <p>Camera and audio built into ANSI-rated safety glasses.</p>
-        <ul><li>Point-of-view capture</li><li>Bone-conduction audio</li></ul>
+      <div class="device">
+        <div class="shot"><img src="img/glasses.jpg" alt="Worker in hard hat and safety glasses"></div>
+        <div class="body"><h3>Smart Safety Glasses</h3><p>Point-of-view camera and audio in ANSI-rated eyewear.</p>
+          <ul><li>Rating<span>ANSI Z87.1</span></li><li>Audio<span>Open-ear</span></li></ul></div>
       </div>
-      <div class="card device">
-        <div class="art"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="8" y="14" width="22" height="16" rx="3"/><path d="M30 22l26-10M30 22l26 30M30 22l26 10"/><path d="M14 30v18M24 30v18M10 48h18"/></svg></div>
-        <h3>Laser Projector</h3>
-        <p>Projects layouts and installation steps onto walls and floors at full scale.</p>
-        <ul><li>Lines up with your drawings</li><li>Step-by-step guided installs</li></ul>
+      <div class="device">
+        <div class="shot"><img src="img/structure.jpg" alt="Building structure under construction">
+          <div class="laser-lines"><i style="left:12%;right:12%;top:46%;height:2px"></i><i style="top:18%;bottom:18%;left:50%;width:2px"></i><i style="left:30%;top:30%;width:40%;height:2px"></i><i style="left:30%;top:30%;width:2px;height:32%"></i><i style="left:70%;top:30%;width:2px;height:32%"></i></div></div>
+        <div class="body"><h3>Laser Projector</h3><p>Projects layouts and install steps onto walls and floors at full scale.</p>
+          <ul><li>Accuracy<span>±2 mm</span></li><li>Range<span>Up to 10 m</span></li></ul></div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="how">
+<section id="how" style="padding-top:40px">
   <div class="wrap">
-    <div class="eyebrow">How it works</div>
-    <h2>Talk while you walk. Kira handles the paperwork.</h2>
-    <div class="grid g4 steps" style="margin-top:40px">
-      <div class="card step"><h3>Walk</h3><p>Start a walkthrough. Kira comes online and watches the live camera.</p></div>
-      <div class="card step"><h3>Talk</h3><p>Say "Hey Kira" and describe what you see. No typing, no forms.</p></div>
-      <div class="card step"><h3>Confirm</h3><p>Kira drafts the note, snaps the photo and asks for a priority. You decide.</p></div>
-      <div class="card step"><h3>Report</h3><p>End the walk and get a summary, action items and a daily report.</p></div>
+    <div class="head reveal">
+      <div><span class="tag">How it works</span><h2>Talk while you walk.</h2></div>
+      <p class="lead">No forms, no typing, no photos to sort at the end of the day. Kira does the paperwork while you do the inspection.</p>
     </div>
-  </div>
-</section>
-
-<section id="platform">
-  <div class="wrap">
-    <div class="eyebrow">Platform</div>
-    <h2>Everything a site walk needs, in one assistant</h2>
-    <div class="grid g3" style="margin-top:40px">
-      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><h3>Voice-first notes</h3><p>Speak naturally. Kira turns it into a structured note with category, priority and an action item.</p></div>
-      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></div><h3>Live hazard detection</h3><p>Missing hard hats, unsafe ladders, flammable storage and blocked exits, boxed on screen as you walk.</p></div>
-      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></div><h3>Photo evidence</h3><p>Every note carries the frame it was recorded on, time-stamped and tied to the walkthrough.</p></div>
-      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h9l3 3v15H6z"/><path d="M9 10h6M9 14h6M9 18h4"/></svg></div><h3>Daily reports and briefs</h3><p>Summaries, issue logs and action lists for managers and supervisors, ready as PDF or CSV.</p></div>
-      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>Follow-ups with approval</h3><p>Kira drafts the email to the right trade. Nothing is sent until you approve it.</p></div>
-      <div class="card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M7 13h4M7 17h7"/></svg></div><h3>Schedules and drawings</h3><p>Kira reads your schedule and drawings, answers questions on site and drafts schedule updates from past projects.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="demo">
-  <div class="wrap split">
     <div>
-      <div class="eyebrow">A walkthrough with Kira</div>
-      <h2>An assistant, not an alarm</h2>
-      <p class="lead">Kira points things out. You make the call. Hazards she spots stay suggestions until an inspector confirms them, so every record is one you stand behind.</p>
+      <div class="step reveal">
+        <div class="shot"><img src="img/walk.jpg" alt="Worker walking along a site">
+          <div class="box ok" style="left:31%;top:13%;width:19%;height:72%"><b>Person · PPE ✓</b></div>
+          <div class="hud" style="left:16px;top:16px"><span class="dot hi"></span>Walkthrough started</div></div>
+        <div><span class="num">01 / WALK</span><h3>Start a walkthrough</h3><p>Open the session and walk. Kira comes online, watches the live camera and checks for missing PPE, unsafe ladders, flammable storage and blocked exits.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="shot"><img src="img/stairs.jpg" alt="Steel stairwell under construction" style="object-position:center 40%">
+          <div class="card" style="left:16px;right:16px;bottom:16px"><small>Inspector · Hey Kira</small><p>"Log this: the stair rail on level two is missing its toe board."</p></div></div>
+        <div><span class="num">02 / TALK</span><h3>Say "Hey Kira"</h3><p>Describe what you see in your own words. Kira turns it into a structured note with a category, an action item and the photo it was said over.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="shot"><img src="img/ladder.jpg" alt="Damaged step ladder">
+          <div class="box warn" style="left:27%;top:6%;width:40%;height:90%"><b>Step ladder · damaged rungs</b></div>
+          <div class="card" style="right:16px;bottom:16px;width:250px"><small>Kira · Priority?</small><div class="chips" style="margin:0"><span>Low</span><span>Med</span><span class="on">High</span><span>Critical</span></div></div></div>
+        <div><span class="num">03 / CONFIRM</span><h3>You make the call</h3><p>Kira flags it and asks for a priority. Nothing becomes an official record until an inspector confirms it.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="shot"><img src="img/report.jpg" alt="Building facade under construction">
+          <div class="card" style="left:16px;top:16px;width:290px"><small>Daily report · Ready</small><p style="font-weight:600;margin-bottom:10px">Level 2–3 walkthrough</p>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font:600 12px/1.3 var(--mono);color:var(--muted)"><div><b style="font-size:22px;color:var(--text)">12</b><br>notes</div><div><b style="font-size:22px;color:var(--warn)">3</b><br>high</div><div><b style="font-size:22px;color:var(--text)">7</b><br>actions</div></div>
+            <div class="chips"><span>PDF</span><span>Issue log</span><span>Action list</span></div></div></div>
+        <div><span class="num">04 / REPORT</span><h3>Report on arrival</h3><p>End the walk and the summary, issue log and action list are already written, with photos, for managers and supervisors.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="platform" style="padding-top:40px">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><span class="tag">Platform</span><h2>Built for the field.<br>Ready for the office.</h2></div>
+      <p class="lead">Everything an inspection needs, from the first "Hey Kira" to the follow-up email.</p>
+    </div>
+    <div class="features reveal">
+      <div class="feature"><div class="k">01<span>Voice</span></div><h3>Voice-first notes</h3><p>Speak naturally. Kira structures it into category, priority and action item.</p></div>
+      <div class="feature"><div class="k">02<span>Vision</span></div><h3>Live hazard detection</h3><p>PPE, ladders, flammable storage and blocked exits, boxed on screen as you walk.</p></div>
+      <div class="feature"><div class="k">03<span>Evidence</span></div><h3>Photo on every note</h3><p>Each note keeps the frame it was recorded on, time-stamped and tied to the walk.</p></div>
+      <div class="feature"><div class="k">04<span>Reports</span></div><h3>Daily briefs</h3><p>Summaries, issue logs and action lists for managers and supervisors, as PDF or CSV.</p></div>
+      <div class="feature"><div class="k">05<span>Follow-up</span></div><h3>Approval-first email</h3><p>Kira drafts the message to the right trade. Nothing is sent until you approve it.</p></div>
+      <div class="feature"><div class="k">06<span>Plans</span></div><h3>Schedules and drawings</h3><p>Kira reads your schedule and drawings, answers questions on site and drafts schedule updates.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="app" style="padding-top:40px">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><span class="tag">The app</span><h2>Real screens.<br>Real walkthrough.</h2></div>
+      <p class="lead">Captured from a live inspection session.</p>
+    </div>
+    <div class="screens">
+      <figure class="reveal"><div class="frame"><img src="img/app-live.jpg" alt="Live camera view with Kira asking for the priority of a new note" loading="lazy" width="1600" height="1000"></div><figcaption>Kira asks for priority before saving</figcaption></figure>
+      <figure class="reveal"><div class="frame"><img src="img/app-notes.jpg" alt="Notes tab listing three notes, each with its photo and priority" loading="lazy" width="1600" height="1000"></div><figcaption>Every note with its photo</figcaption></figure>
+      <figure class="reveal"><div class="frame"><img src="img/app-convo.jpg" alt="Conversation with a saved note card under the Kira reply" loading="lazy" width="1600" height="1000"></div><figcaption>Notes anchored in the conversation</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="demo">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="tag">An assistant, not an alarm</span>
+      <h2>Kira points it out.<br>You decide.</h2>
+      <p class="lead">Hazards Kira spots stay suggestions until an inspector confirms them, so every record is one you stand behind.</p>
       <ul class="checks">
         <li><strong>Human-confirmed records.</strong> AI flags never become official notes on their own.</li>
         <li><strong>Full audit trail.</strong> Every note, photo, flag and reply is logged in order.</li>
         <li><strong>Stays on task.</strong> Kira only helps with the inspection in front of you.</li>
       </ul>
     </div>
-    <div class="chat">
-      <div class="msg kira"><span>Kira</span>Heads up: someone near the stairwell isn't wearing a hard hat. Want me to note it?</div>
+    <div class="chat reveal">
+      <div class="msg kira"><span>Kira</span>Heads up: there's a step ladder with damaged rungs by the east wall. Want me to note it?</div>
       <div class="msg me"><span>Inspector</span>Yes, add it.</div>
       <div class="msg kira"><span>Kira</span>Got it. What priority?</div>
       <div class="msg me"><span>Inspector</span>High.</div>
-      <div class="msg note"><strong>Note 4 · PPE · High</strong><br>Worker without hard hat at Level 2 stairwell. Action: remind the crew lead before next shift. Photo attached.</div>
-      <div class="msg kira"><span>Kira</span>Saved with the photo. I've drafted a note to the framing crew lead. Send it?</div>
+      <div class="msg note"><div class="shot"><img src="img/ladder.jpg" alt=""></div><div><strong>Note 4 · Equipment · High</strong>Damaged step ladder at the east wall, level 2. Action: tag out and replace before next shift.</div></div>
+      <div class="msg kira"><span>Kira</span>Saved with the photo. I've drafted a message to the site super. Send it?</div>
     </div>
   </div>
 </section>
 
 <section id="beyond">
   <div class="wrap">
-    <div class="eyebrow">Beyond inspection</div>
-    <h2>From finding problems to fixing them</h2>
-    <div class="grid g3" style="margin-top:40px">
-      <div class="card"><div class="tag">Laser guidance</div><h3>Projected installation instructions</h3><p>Pair Kira with the laser projector to put anchor points, cut lines and install sequences directly onto the surface. Crews follow the light, and Kira checks the result.</p></div>
-      <div class="card"><div class="tag">Training</div><h3>On-site teaching module</h3><p>Guided lessons for new workers, built on real site footage. Kira walks trainees through tasks step by step and checks their work as they go.</p></div>
-      <div class="card"><div class="tag">Project memory</div><h3>Every walkthrough, searchable</h3><p>Ask "when did we last see water at the east stair?" and get the note, the photo and who followed up.</p></div>
+    <div class="head reveal">
+      <div><span class="tag">Beyond inspection</span><h2>From finding problems<br>to fixing them.</h2></div>
+      <p class="lead">Kira doesn't stop at the report. The same assistant guides installs, trains new crews and remembers every walk.</p>
+    </div>
+    <div class="tiles reveal">
+      <div class="tile"><img src="img/laser.jpg" alt="Building floors under construction">
+        <div class="laser-lines"><i style="left:8%;right:8%;top:38%;height:2px"></i><i style="left:8%;right:8%;top:72%;height:2px"></i><i style="left:36%;top:20%;width:2px;height:62%"></i><i style="left:64%;top:20%;width:2px;height:62%"></i></div>
+        <div class="over"><span class="tag">Laser guidance</span><h3>Projected installation instructions</h3><p>The laser projector puts anchor points, cut lines and install sequences onto the surface at full scale. Crews follow the light, and Kira checks the result.</p></div></div>
+      <div class="tile"><img src="img/training.jpg" alt="Crew in hard hats learning on site">
+        <div class="over"><span class="tag">Training</span><h3>On-site teaching module</h3><p>Guided lessons for new workers, built on real site footage, checked as they go.</p></div></div>
+      <div class="tile"><img src="img/memory.jpg" alt="Building facade" style="object-position:center 30%">
+        <div class="over"><span class="tag">Project memory</span><h3>Every walk, searchable</h3><p>"When did we last see water at the east stair?" Get the note, the photo and who followed up.</p></div></div>
     </div>
   </div>
 </section>
 
-<section id="team" class="team">
+<section id="team" style="padding-top:40px">
   <div class="wrap">
-    <div class="eyebrow">Team</div>
-    <h2>Built at the University of Florida</h2>
-    <div class="grid g5" style="margin-top:40px">
-      <div class="card"><div class="avatar">SL</div><h3>Dr. Shuai Li</h3><p>Faculty lead</p></div>
-      <div class="card"><div class="avatar">SW</div><h3>Songzi Wu</h3><p>Role</p></div>
-      <div class="card"><div class="avatar">VS</div><h3>Vishal Setti</h3><p>Role</p></div>
-      <div class="card"><div class="avatar">GS</div><h3>Gavin Sawall</h3><p>Role</p></div>
-      <div class="card"><div class="avatar">MW</div><h3>Mengjun Wang</h3><p>Role</p></div>
+    <div class="head reveal">
+      <div><span class="tag">Team</span><h2>Built at the<br>University of Florida.</h2></div>
+      <p class="lead">Construction engineers and AI researchers building the inspection tool we wanted on site.</p>
+    </div>
+    <div class="team reveal">
+      <div class="person"><div class="ini">SL</div><h3>Dr. Shuai Li</h3><p>Faculty lead</p></div>
+      <div class="person"><div class="ini">SW</div><h3>Songzi Wu</h3><p>Role</p></div>
+      <div class="person"><div class="ini">VS</div><h3>Vishal Setti</h3><p>Role</p></div>
+      <div class="person"><div class="ini">GS</div><h3>Gavin Sawall</h3><p>Role</p></div>
+      <div class="person"><div class="ini">MW</div><h3>Mengjun Wang</h3><p>Role</p></div>
     </div>
   </div>
 </section>
 
-<section id="contact" class="cta">
-  <div class="wrap">
-    <div class="eyebrow">Standing InnOvation Showcase 2026</div>
-    <h2>See Kira live at our table</h2>
-    <p class="lead">Walk up, grab the phone and run a two-minute inspection. Or get in touch to bring <span data-brand>Brand</span> to your site.</p>
-    <a class="button primary" href="mailto:contact@example.com">Book a demo</a>
+<section class="cta" id="contact">
+  <img src="img/cta.jpg" alt="">
+  <div class="wrap reveal">
+    <span class="tag">Standing InnOvation Showcase 2026</span>
+    <h2>See Kira live<br>at our table.</h2>
+    <p class="lead">Pick up the phone and run a two-minute inspection. Or get in touch to bring Walkscribe to your site.</p>
+    <form class="demo-form" action="https://formspree.io/f/mwlvavqd" method="POST">
+      <input name="name" placeholder="Name" autocomplete="name" required>
+      <input name="email" type="email" placeholder="Work email" autocomplete="email" required>
+      <input name="company" placeholder="Company" autocomplete="organization">
+      <input name="role" placeholder="Role" autocomplete="organization-title">
+      <textarea name="message" rows="3" placeholder="What would you like to inspect? (optional)"></textarea>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" hidden>
+      <button class="button primary" type="submit">Book a demo →</button>
+    </form>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 <span data-brand>Brand</span></span>
-    <span>University of Florida</span>
+    <div class="foot">
+      <div>
+        <a class="logo" href="#"><i></i>Walkscribe</a>
+        <p>The AI site inspector that walks with you. Notes, photos and reports from a single walkthrough.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#hardware">Hardware</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#platform">Platform</a></li>
+          <li><a href="#app">App</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#contact">Book a demo</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Walkscribe</span>
+      <span>Built at the University of Florida</span>
+    </div>
   </div>
 </footer>
 
 <script>
-  // Product name, set once.
-  const BRAND = "Brand";
-  document.querySelectorAll("[data-brand]").forEach((el) => { el.textContent = BRAND; });
-  document.title = document.title.replace("Brand", BRAND);
+  const nav = document.getElementById("nav");
+  const onScroll = () => nav.classList.toggle("solid", scrollY > 40);
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  const seen = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add("in"); seen.unobserve(e.target); }
+  }), { threshold: 0.15 });
+  document.querySelectorAll(".reveal").forEach((el) => seen.observe(el));
+
+  // Hero: boxes draw in, then the inspector's line types out, on a loop.
+  const viewer = document.getElementById("viewer");
+  const typed = document.getElementById("typed");
+  const line = "Log the exposed rebar by the column, trip hazard.";
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function play() {
+    viewer.classList.remove("live");
+    typed.textContent = "";
+    requestAnimationFrame(() => requestAnimationFrame(() => viewer.classList.add("live")));
+    if (still) { typed.textContent = line; return; }
+    let i = 0;
+    setTimeout(function type() {
+      typed.textContent = line.slice(0, ++i);
+      if (i < line.length) setTimeout(type, 38);
+    }, 1200);
+    setTimeout(play, 11000);
+  }
+  play();
 </script>
 </body>
 </html>
